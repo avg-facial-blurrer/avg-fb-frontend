@@ -1,40 +1,51 @@
-import { Child } from '../domain/Child';
+import {Child} from '../domain/Child';
 
 export class Group {
-    private readonly _id: number;
-    private readonly _name: string;
-    private children: Child[] = [];
-    
-    constructor(id: number, name: string, children?: Child[]) {
-        this._id = id;
-        this._name = name;
+  private readonly _id: number;
+  private readonly _name: string;
+  private children: Child[] = [];
 
-        if (children != null) this.children = children;
-        else this.children = null;
-    }
+  constructor(id: number, name: string, children?: Child[]) {
+    this._id = id;
+    this._name = name;
 
-    public getId(): number {
-        return this._id;
+    if (children != null) {
+      this.children = children;
+    } else {
+      this.children = null;
     }
+  }
 
-    public getName(): string {
-        return this._name;
-    }
+  public getId(): number {
+    return this._id;
+  }
 
-    public getChildren(): Child[] {
-        return this.children;
-    }
+  public getName(): string {
+    return this._name;
+  }
 
-    public addChild(child: Child): void {
-        this.children.push(child);
-    }
+  public getChildren(): Child[] {
+    return this.children;
+  }
 
-    public getChildById(childId: number): Child {
-        this.children.forEach(x => { if (x.id == childId) return x; })
-        return null;
-    }
+  public addChild(child: Child): void {
+    this.children.push(child);
+  }
 
-    public removeChildById(childId: number): void {
-        this.children.forEach((x, i) => { if (x.id == childId) this.children.splice(i, 1); }); 
-    }
+  public getChildById(childId: number): Child {
+    this.children.forEach(x => {
+      if (x.id === childId) {
+        return x;
+      }
+    });
+    return null;
+  }
+
+  public removeChildById(childId: number): void {
+    this.children.forEach((x, i) => {
+      if (x.id === childId) {
+        this.children.splice(i, 1);
+      }
+    });
+  }
 }
