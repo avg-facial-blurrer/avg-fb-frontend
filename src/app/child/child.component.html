@@ -1,0 +1,20 @@
+<div *ngIf="!loading" id="classes-wrapper">
+    <div id="child-details">
+        <h1>{{child.firstName}} {{child.lastName}}</h1>
+        <form class="child-update">
+            <mat-form-field class="update-full-width">
+              <input #firstName matInput value="{{child.firstName}}" placeholder="Voornaam">
+            </mat-form-field>
+            <mat-form-field class="update-full-width">
+              <input #lastName matInput  value="{{child.lastName}}"  placeholder="Achternaam">
+            </mat-form-field>
+        </form>
+        <div>
+          <button (click)="updateChild(firstName.value, lastName.value)" mat-button>wijzigen</button>
+          <button (click)="deleteChild" mat-button>verwijderen</button>
+        </div>
+        <app-permissions *ngIf="child.permissions != undefined" [permissions]="child.permissions"></app-permissions>
+        <app-permissions *ngIf="child.permissions === undefined" [childId]="child.id"></app-permissions>
+        <button id="back-button" (click)="back()" color="accent" mat-raised-button>Terug</button>
+    </div>
+</div>

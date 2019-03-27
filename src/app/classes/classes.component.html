@@ -1,0 +1,14 @@
+<div id="classes-wrapper">
+    <div id="class-list" *ngIf="!selectedGroup">
+        <h1>Klassen</h1>
+        <button class="class-btn-selector" mat-raised-button (click)="loadClassDetails(group.getId())" *ngFor="let group of getGroups()">Klas {{group.getName()}}</button>
+    </div>
+    <div id="class-details" *ngIf="selectedGroup">
+        <h1>Klas {{this.selectedGroup.getName()}}</h1>
+        <div id="child-wrapper" *ngIf="selectedGroup.getChildren() != null">
+          <button mat-raised-button *ngFor="let child of this.selectedGroup.getChildren()" (click)="setCurrentChild(child)">{{child.firstName}} {{child.lastName}}</button>
+        </div>
+        <p *ngIf="selectedGroup.getChildren() == null">Deze klas bevat nog geen kinderen.</p>
+        <button id="back-button" (click)="this.selectedGroup = null" color="accent" mat-raised-button>Terug</button>
+    </div>
+</div>

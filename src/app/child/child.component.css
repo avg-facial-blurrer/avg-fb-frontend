@@ -1,0 +1,18 @@
+.child-update {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.update-full-with{
+  width: 100%;
+}
+
+
+mat-card {
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+  alignment: center;
+  text-align: center;
+}

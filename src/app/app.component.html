@@ -1,2 +1,14 @@
-<app-login *ngIf="!token"></app-login>
-<div *ngIf="token"> User with token: {{token}} has logged in</div>
+<div id="cms-wrapper">
+    <app-login *ngIf="!token"></app-login>
+    <mat-sidenav-container class="container" *ngIf="token">
+            <mat-sidenav mode="side" opened id="sidenav-wrapper">
+                <img id="logo" src="../assets/img/logo.png" alt="Sterrebos"/>
+                <button class="sidenav-button" id="home-button" mat-raised-button (click)="performAction(0)">Home</button>
+                <button class="sidenav-button" id="logout-button" mat-raised-button (click)="performAction(3)">Logout</button>
+            </mat-sidenav>
+            <mat-sidenav-content id="main-content">
+                <app-child *ngIf="child != null" [child]="child"></app-child>
+                <app-classes *ngIf="action == 0 && child == null"></app-classes>
+            </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

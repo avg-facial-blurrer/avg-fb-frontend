@@ -2,37 +2,60 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {LoginResponse} from './dto/loginResponse';
 import {LoginRequest} from './dto/loginRequest';
+import {LogoutResponse} from './dto/LogoutResponse';
+import {VerifiedTokenResponse} from './dto/VerifiedTokenResponse';
 import {Subject} from 'rxjs';
+import { TokenRequest } from './dto/TokenRequest';
 
 @Injectable()
 export class LoginService {
-
+  // actual urlbase
+  // const url = 'http://ec2-54-173-110-22.compute-1.amazonaws.com:8080/blackpool-backend/cms/login';
+  private readonly URL_BASE: string = 'http://localhost:8080/cms';
+  private readonly HEADERS: HttpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
   private tokenReceived = new Subject<string>();
   public tokenReceived$ = this.tokenReceived.asObservable();
-  private token: string;
-  private user: string;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   public login(username: string, password: string): void {
-    const url = 'http://ec2-54-173-110-22.compute-1.amazonaws.com:8080/blackpool-backend/cms/login';
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const loginRequest = new LoginRequest(username, password);
-    this.httpClient.post<LoginResponse>(url, loginRequest, {headers: headers}).subscribe(
-      data => this.onLoggedIn(data),
-      err => this.onLoginError(err));
+    this.httpClient.post<LoginResponse>(this.URL_BASE + '/login', loginRequest, {headers: this.HEADERS}).subscribe(data => {
+      if (data.token != null && data.token !== '') {
+        localStorage.setItem('token', data.token);
+        this.tokenReceived.next(data.token);
+      }
+    }, error => {});
   }
 
-  private onLoggedIn(loginResponse: LoginResponse): void {
-    this.token = loginResponse.token;
-    this.user = loginResponse.user;
-    console.log('A token has been received.', this.token);
-    this.tokenReceived.next(this.token);
+  public verifyToken(token: string): boolean {
+    const tokenRequest = new TokenRequest(token);
+    this.httpClient.post<VerifiedTokenResponse>(this.URL_BASE + '/verifyToken', tokenRequest, {headers: this.HEADERS}).subscribe(data => {
+      if (data != null) {
+        if (data.verified) {
+          this.updateToken(token);
+          return true;
+        }
+      }
+    }, (error) => {});
+    return false;
   }
-  private onLoginError(error: HttpErrorResponse): void {
-    this.token = undefined;
-    this.user = undefined;
-    console.log('An error has occured.', error.status);
-    this.tokenReceived.next(this.token);
+
+  public logout(token: string): void {
+    console.log('called');
+    const tokenRequest = new TokenRequest(token);
+    this.httpClient.post<LogoutResponse>(this.URL_BASE + '/logout', tokenRequest, {headers: this.HEADERS}).subscribe(() => {
+      console.log('works');
+      this.updateToken('');
+    }, (error) => {});
+  }
+
+  private updateToken(token: string): void {
+    this.tokenReceived.next(token);
+    if (token === '' || token == null) {
+      localStorage.removeItem('token');
+    } else {
+      localStorage.setItem('token', token);
+    }
   }
 }

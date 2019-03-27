@@ -1,0 +1,40 @@
+<mat-accordion *ngIf="!permissions.id">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-expansion-panel-header>
+        <h1>Toestemmingen formulier
+      </mat-expansion-panel-header>
+    <mat-panel-description>
+      Toevoegen
+    </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-checkbox  [(ngModel)]="permissions.enclosedEnvironmentPermission">Gesloten Omgeving</mat-checkbox>
+    <mat-checkbox [(ngModel)]=permissions.schoolPaperPermission>SchoolKrant</mat-checkbox>
+    <mat-checkbox [(ngModel)]=permissions.socialMediaPermission>Social Media</mat-checkbox>
+
+    <button (click)="addPermissions()" mat-button >toevoegen</button>
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+<mat-accordion *ngIf="permissions.id">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Toestemmingen formulier
+      </mat-panel-title>
+      <mat-panel-description>
+        Inzien en bewerken
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-checkbox  [(ngModel)]="permissions.enclosedEnvironmentPermission">Gesloten Omgeving</mat-checkbox>
+    <mat-checkbox [(ngModel)]=permissions.schoolPaperPermission>SchoolKrant</mat-checkbox>
+    <mat-checkbox [(ngModel)]=permissions.socialMediaPermission>Social Media</mat-checkbox>
+
+    <button (click)="updatePermissions()" mat-button >Wijzigen</button>
+    <button (click)="deletePermissions()" mat-button>verwijderen</button>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
