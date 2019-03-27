@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {LoginResponse} from './dto/loginResponse';
-import {LoginRequest} from './dto/loginRequest';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {LoginResponse} from './dto/LoginResponse';
+import {LoginRequest} from './dto/LoginRequest';
 import {LogoutResponse} from './dto/LogoutResponse';
 import {VerifiedTokenResponse} from './dto/VerifiedTokenResponse';
 import {Subject} from 'rxjs';

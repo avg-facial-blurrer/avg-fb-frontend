@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class StateService {
   private currentAction = new Subject<Actions>();
-  public currentAction$ = this.currentAction.asObservable()
+  public currentAction$ = this.currentAction.asObservable();
   private currentChild = new Subject<Child>();
   public currentChild$ = this.currentChild.asObservable();
   private currentGroup = new Subject<Group>();

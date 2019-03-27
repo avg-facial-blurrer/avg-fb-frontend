@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Child} from '../domain/Child';
-import { Subject, Observable} from 'rxjs';
-import { callNgModuleLifecycle } from '@angular/core/src/view/ng_module';
+import {Observable} from 'rxjs';
 
 const BASE_URL = 'http://localhost:8080/blackpool_backend_war_exploded/Child';
 const HEADERS = new HttpHeaders().set('Content-Type', 'application/json');
@@ -10,7 +9,8 @@ const HEADERS = new HttpHeaders().set('Content-Type', 'application/json');
 
 @Injectable()
 export class ChildService {
-  constructor(private httpClient: HttpClient ) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   public async getChildById(id: number): Promise<Observable<Child>> {
     const url = BASE_URL + '/get/' + id;
@@ -33,6 +33,6 @@ export class ChildService {
   }
 
   public getChildInClass(classId: number) {
-    
+
   }
 }
